@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Chamado</title>
+</head>
+<body>
+    <h1>Criar Chamado</h1>
+    <form method="post">
+        <label>Título:<br><input name="title" required></label><br>
+        <label>Descrição:<br><textarea name="description" required></textarea></textarea></label><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <a href="{{ url_for('main.index') }}">Voltar</a>
+</body>
+</html>
