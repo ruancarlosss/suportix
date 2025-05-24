@@ -6,7 +6,7 @@ from app.models import User
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/register', method=['GET', 'POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 
 def register():
     if current_user.is_authenticated:
@@ -14,7 +14,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if User.query.filter_by(username=username).frits():
+        if User.query.filter_by(username=username).first():
             flash('Usuário já existe.')
             return redirect(url_for('auth.register'))
         new_user = User(username=username)
@@ -24,7 +24,7 @@ def register():
         flash('Regsitro realizado! Faça Login.')
     return render_template('register.html')
 
-@auth.rout('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
@@ -32,7 +32,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         remember = True if request.form.get('remember') else False
-        user = User.query.filter_by(username=username).firt()
+        user = User.query.filter_by(username=username).first()
         if not user or not user.check_password(password):
             flash('Credencias inválidas.')
             return redirect(url_for('auth.login'))
@@ -41,7 +41,7 @@ def login():
     return render_template('login.html')
 
 
-@auth.rout('/logout')
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()

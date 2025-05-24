@@ -7,6 +7,16 @@
 </head>
 <body>
     
+    {% if current_user.is_authenticated %}
+        <p>Olá, {{ current_user.username }}! <a href="{{ url_for('auth.logout') }}">Sair</a></p>
+    {% else %}
+        <p>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}">Registrar</a>
+        </p>
+    {% endif %}
+
+
     <h1>Lista de Chamados</h1>
     <a href="{{ url_for('main.create_ticket')}}">Novo Chamado</a>
 
