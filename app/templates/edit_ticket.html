@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Editar Chamados</title></head>
+<body>
+    <h1>Editar Chamado #{{ ticket.id }}</h1>
+    <form method="POST">
+        
+        <label>Título:<br>
+            <input name="title" value="{{ ticket.title }}" required>
+
+        </label><br>
+
+        <label>Descrição:<br>
+            <textarea name="description" required>{{ ticket.description }}</textarea>
+
+        </label><br>
+
+        <label>Status:<br>
+            <select name="status">
+                <option value="Aberto" {% if ticket.status=='Aberto' %}selected{% endif %}>Aberto</option>
+                <option value="Em andamento" {% if ticket.status=='Em andamento' %}selected{% endif %}>Em andamento</option>
+                <option value="Resolvido" {% if ticket.status=='Resolvido' %}selected{% endif %}>Resolvido</option>
+            </select>
+        </label><br>
+        <button type="submit">Salvar</button>
+    </form>
+    <p><a href="{{ url_for('admin.dashboard') }}">Voltar</a></p>
+</body>
+</html>

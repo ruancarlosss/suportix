@@ -4,6 +4,7 @@ from flask_login import LoginManager
 
 
 
+
 # Configuração do banco de dados
 db = SQLAlchemy()
 
@@ -42,6 +43,10 @@ def create_app():
     app.register_blueprint(main)
     from app.routes_auth import auth
     app.register_blueprint(auth)
+
+
+    from app.routes_admin import admin
+    app.register_blueprint(admin)
 
     return app
 

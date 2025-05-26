@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>Painel Admin</title></head>
+<body>
+    <h1>painel de Administração</h1>
+    <p><a href="{{ url_for('main.index') }}">Voltar à Lista Pública</a></p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+        {% for m in messages %}
+            <li>{{ m }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Título</th><th>Status</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_ticket', ticket_id=ticket.id)}}">Editar</a>
+                        <form action="{{ url_for('admin.delete_ticket', ticket_id=ticket.id) }}" method="POST" style="display: inline;">
+                            <button type="submit" onclick="return confirm('Excluir este chamado?');">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
