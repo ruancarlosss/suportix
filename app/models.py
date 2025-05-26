@@ -11,6 +11,9 @@ class Ticket(db.Model):
     status          = db.Column(db.String(20), default='Aberto')
     created_at      = db.Column(db.DateTime, server_default=db.func.now())
 
+    user_id         = db.Colmn(db.Integer, db.ForeignKey('user.id'), nullable=False)        
+    user            = db.relationship('User', back_populates='tickets')
+
 
     def __repr__(self):
         return f'<Ticket {self.id} - {self.title}>'
@@ -20,9 +23,12 @@ class Ticket(db.Model):
 
 class User(db.Model, UserMixin):
 
-    id              = db.Column(db.Integer, primary_key=True)
-    username        = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash   = db.Column(db.String(128), nullable=False)
+    id              = db.Column(db.Integer, primary_key=True) # ID do usuário
+    username        = db.Column(db.String(150), unique=True, nullable=False) # Armaneza o nome do usuário
+    password_hash   = db.Column(db.String(128), nullable=False) # Armazena a senha do usuário
+    is_admin        = db.Column(db.Boolean, default=False) # Define as permissões, Admin ou User.
+
+    tickets         = db.relationship('Ticket', back_populates='user')
 
 
     def set_password(self, password):
