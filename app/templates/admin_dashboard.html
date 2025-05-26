@@ -25,6 +25,7 @@
                     <td>{{ ticket.id }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.user.username }}</td> <!--Coluna autor-->
                     <td>
                         <a href="{{ url_for('admin.edit_ticket', ticket_id=ticket.id)}}">Editar</a>
                         <form action="{{ url_for('admin.delete_ticket', ticket_id=ticket.id) }}" method="POST" style="display: inline;">
@@ -35,5 +36,39 @@
                 {% endfor %}
         </tbody>
     </table>
+
+    <h2>Gerenciar Usuários</h2>
+    <table>
+        <thead>
+            <tr><th>Usuário</th><th>Admin?</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+                <tr>
+                    <td>{{ u.username }}</td>
+                    <td>{{ '✅' if u.is_admin else '❌'}}</td>
+                    <td>
+                        {% if u.id != current_user %}
+                            <form action="{ url_for('admin.toggle_admin', user_id=u.id)}" method="POST" style="display:inline;">
+                                {% if u.is_admin %}
+                                    <button type="submit">Rebaixar</button>
+                                {% else %}
+                                    <button type="submit">Promover</button>
+                                {% endif%}
+                            </form>
+                        {% else %}
+                            - <!-- Não permitir você alterar o seu próprio usuário -->
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        setInterval(function() {
+            window.location.reload();
+        }, 10000)
+    </script>
 </body>
 </html>
