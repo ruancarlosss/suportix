@@ -28,6 +28,7 @@
     {%for t in tickets %}
         <li>
             <strong>#{{ t.id }} {{ t.title}}</strong> - {{ t.status }}<br>
+            <em>Criado por: {{ t.user.username }}</em><br> <!--Mostra o nome do autor-->
             {{ t.description }}
 
         </li>
@@ -37,6 +38,10 @@
     </ul>
 
 
-
+    <script>
+        setInterval(function() {
+            window.location.reload();
+        }, 10000)
+    </script>
 </body>
 </html>
